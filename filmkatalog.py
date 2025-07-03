@@ -15,17 +15,37 @@ def filme_anzeigen():
         print(f"Titel: {titel}")
         print(f"  Regisseur: {details.get('regisseur', 'N/A')}")
         print(f"  Jahr: {details.get('jahr', 'N/A')}")
-        print(f"  Genre: {details.get('genre', 'N/A')}")       # GEÄNDERT
-        print(f"  Bewertung: {details.get('bewertung', 'N/A')}") # GEÄNDERT
+        print(f"  Genre: {details.get('genre', 'N/A')}")
+        print(f"  Bewertung: {details.get('bewertung', 'N/A')}")
         print("-----------------------")
 
-def film_hinzufuegen():
+def film_hinzufuegen(): # GEÄNDERT: Mit Validierung
     print("\n--- Film hinzufügen ---")
     titel = input("Titel des Films: ")
     regisseur = input("Regisseur des Films: ")
-    jahr = input("Erscheinungsjahr des Films: ")
-    genre = input("Genre des Films: ") # NEU
-    bewertung = input("Bewertung (1-5 Sterne): ") # NEU
+
+    # Validierung für das Jahr
+    while True:
+        jahr_str = input("Erscheinungsjahr des Films: ")
+        try:
+            jahr = int(jahr_str)
+            break
+        except ValueError:
+            print("Ungültige Eingabe. Das Jahr muss eine Zahl sein.")
+
+    genre = input("Genre des Films: ")
+
+    # Validierung für die Bewertung
+    while True:
+        bewertung_str = input("Bewertung (1-5 Sterne): ")
+        try:
+            bewertung = int(bewertung_str)
+            if 1 <= bewertung <= 5:
+                break
+            else:
+                print("Ungültige Bewertung. Bitte geben Sie eine Zahl zwischen 1 und 5 ein.")
+        except ValueError:
+            print("Ungültige Eingabe. Die Bewertung muss eine Zahl sein.")
 
     if titel in filme:
         print(f"Fehler: Film '{titel}' existiert bereits im Katalog.")
@@ -34,8 +54,8 @@ def film_hinzufuegen():
     filme[titel] = {
         "regisseur": regisseur,
         "jahr": jahr,
-        "genre": genre,       # NEU
-        "bewertung": bewertung # NEU
+        "genre": genre,
+        "bewertung": bewertung
     }
     print(f"Film '{titel}' wurde hinzugefügt.")
 
@@ -57,8 +77,8 @@ def film_suchen():
         print(f"Titel: {titel}")
         print(f"  Regisseur: {details.get('regisseur', 'N/A')}")
         print(f"  Jahr: {details.get('jahr', 'N/A')}")
-        print(f"  Genre: {details.get('genre', 'N/A')}")       # GEÄNDERT
-        print(f"  Bewertung: {details.get('bewertung', 'N/A')}") # GEÄNDERT
+        print(f"  Genre: {details.get('genre', 'N/A')}")
+        print(f"  Bewertung: {details.get('bewertung', 'N/A')}")
         print("-----------------------")
 
 def film_loeschen():
@@ -126,8 +146,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-
-
-
