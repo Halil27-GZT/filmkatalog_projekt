@@ -3,7 +3,7 @@ import json
 # Dein Filmkatalog-Programm
 
 filme = {} # Ein Dictionary zum Speichern der Filme. Schlüssel: Filmtitel, Wert: Dictionary mit Details
-DATEINAME = "filme.json" # NEU: Dateiname für die Speicherung des Katalogs
+DATEINAME = "filme.json" # Dateiname für die Speicherung des Katalogs
 
 def filme_anzeigen():
     if not filme:
@@ -15,6 +15,8 @@ def filme_anzeigen():
         print(f"Titel: {titel}")
         print(f"  Regisseur: {details.get('regisseur', 'N/A')}")
         print(f"  Jahr: {details.get('jahr', 'N/A')}")
+        print(f"  Genre: {details.get('genre', 'N/A')}")       # GEÄNDERT
+        print(f"  Bewertung: {details.get('bewertung', 'N/A')}") # GEÄNDERT
         print("-----------------------")
 
 def film_hinzufuegen():
@@ -22,6 +24,8 @@ def film_hinzufuegen():
     titel = input("Titel des Films: ")
     regisseur = input("Regisseur des Films: ")
     jahr = input("Erscheinungsjahr des Films: ")
+    genre = input("Genre des Films: ") # NEU
+    bewertung = input("Bewertung (1-5 Sterne): ") # NEU
 
     if titel in filme:
         print(f"Fehler: Film '{titel}' existiert bereits im Katalog.")
@@ -29,7 +33,9 @@ def film_hinzufuegen():
 
     filme[titel] = {
         "regisseur": regisseur,
-        "jahr": jahr
+        "jahr": jahr,
+        "genre": genre,       # NEU
+        "bewertung": bewertung # NEU
     }
     print(f"Film '{titel}' wurde hinzugefügt.")
 
@@ -51,6 +57,8 @@ def film_suchen():
         print(f"Titel: {titel}")
         print(f"  Regisseur: {details.get('regisseur', 'N/A')}")
         print(f"  Jahr: {details.get('jahr', 'N/A')}")
+        print(f"  Genre: {details.get('genre', 'N/A')}")       # GEÄNDERT
+        print(f"  Bewertung: {details.get('bewertung', 'N/A')}") # GEÄNDERT
         print("-----------------------")
 
 def film_loeschen():
@@ -62,7 +70,7 @@ def film_loeschen():
     else:
         print(f"Fehler: Film '{titel_zu_loeschen}' nicht im Katalog gefunden.")
 
-def katalog_speichern(): # NEU
+def katalog_speichern():
     try:
         with open(DATEINAME, 'w', encoding='utf-8') as f:
             json.dump(filme, f, indent=4, ensure_ascii=False)
@@ -70,7 +78,7 @@ def katalog_speichern(): # NEU
     except IOError as e:
         print(f"Fehler beim Speichern des Katalogs: {e}")
 
-def katalog_laden(): # NEU
+def katalog_laden():
     global filme
     try:
         with open(DATEINAME, 'r', encoding='utf-8') as f:
@@ -96,7 +104,7 @@ def zeige_menue():
     print("------------------------")
 
 def main():
-    katalog_laden() # GEÄNDERT: Laden beim Start
+    katalog_laden()
     while True:
         zeige_menue()
         wahl = input("Ihre Wahl: ")
@@ -110,7 +118,7 @@ def main():
         elif wahl == '4':
             film_loeschen()
         elif wahl == '5':
-            katalog_speichern() # GEÄNDERT: Speichern vor dem Beenden
+            katalog_speichern()
             print("Programm wird beendet. Auf Wiedersehen!")
             break
         else:
@@ -118,6 +126,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
